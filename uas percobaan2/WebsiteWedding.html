@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Wedding of Aidan & Mutia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #b08d57;
+            --wood: #4a3728;
+            --cream: #f9f7f2;
+            --white: #ffffff;
+            --batik-bg: url('https://www.transparenttextures.com/patterns/batik-fractal.png');
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; background-color: var(--cream); color: var(--wood); scroll-behavior: smooth; overflow-x: hidden; line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+
+        .sub-title { font-size: 2rem; margin-bottom: 20px; color: var(--wood); text-transform: uppercase; letter-spacing: 2px; text-align: center;}
+        .ornament-divider { color: var(--gold); font-size: 1.5rem; margin: 20px 0; opacity: 0.7; text-align: center;}
+        .gunungan { width: 80px; margin-bottom: 20px; opacity: 0.8; filter: sepia(100%) hue-rotate(10deg) saturate(150%); }
+
+        /* GATE */
+        #gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=1000');
+            background-size: cover; background-position: center;
+            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; transition: 1s;
+        }
+        #gate h1 { font-family: 'Great Vibes', cursive; font-size: 5rem; margin: 20px 0; }
+        .btn-open {
+            padding: 15px 40px; background: var(--gold); color: white; border: 2px solid var(--gold);
+            border-radius: 50px; cursor: pointer; font-weight: 600; margin-top: 30px; transition: 0.3s;
+        }
+        .btn-open:hover { background: transparent; color: var(--gold); }
+
+        /* CONTENT */
+        #content { display: none; }
+        section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        section.show { opacity: 1; transform: translateY(0); }
+        .themed-section { background-image: var(--batik-bg); background-color: #faf8f4; border-top: 5px solid var(--gold); border-bottom: 5px solid var(--gold); border-radius: 30px; margin: 40px auto; text-align: center;}
+
+        /* STORY ZIG-ZAG */
+        .story-timeline { position: relative; max-width: 900px; margin: 50px auto; padding: 20px 0; }
+        .story-timeline::after { content: ''; position: absolute; width: 2px; background: var(--gold); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .story-container-v2 { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; box-sizing: border-box; }
+        .story-pin { position: absolute; width: 70px; height: 70px; right: -35px; top: 15px; background-color: var(--gold); border: 3px solid var(--white); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); z-index: 10; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .story-pin img { width: 100%; height: 100%; object-fit: cover; transform: rotate(45deg); }
+        .left { left: 0; text-align: right; }
+        .right { left: 50%; text-align: left; }
+        .right .story-pin { left: -35px; }
+        .story-content-v2 { padding: 20px; background: white; position: relative; border-radius: 15px; border: 1px solid var(--gold); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+
+        @media screen and (max-width: 600px) {
+            .story-timeline::after { left: 31px; }
+            .story-container-v2 { width: 100%; padding-left: 80px; padding-right: 25px; text-align: left; }
+            .left, .right { left: 0; }
+            .story-pin { left: -4px !important; width: 60px; height: 60px; }
+        }
+
+        /* COUPLE & GALLERY */
+        .couple-photo { width: 250px; height: 350px; border-radius: 150px 150px 20px 20px; border: 4px solid var(--gold); object-fit: cover; object-position: center 10%; margin-bottom: 20px; }
+        .couple-name-script { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
+        .gallery-img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; border: 2px solid var(--gold); }
+
+        /* COUNTDOWN */
+        .save-the-date { font-size: 1.5rem; letter-spacing: 5px; color: var(--gold); font-weight: bold; margin-bottom: 10px; }
+        .countdown-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .countdown-item { background: var(--wood); color: white; padding: 15px; border-radius: 10px; min-width: 80px; text-align: center;}
+        .countdown-item span { display: block; font-size: 1.5rem; font-weight: bold; }
+
+        /* RSVP & BANK BOX */
+        .rsvp-box, .bank-card { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); border: 1px solid var(--gold); max-width: 600px; margin: 30px auto; text-align: center;}
+        .rsvp-box input, .rsvp-box select, .rsvp-box textarea { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; font-family: 'Montserrat'; }
+        .btn-confirm, .btn-maps { width: 100%; padding: 15px; background: var(--wood); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 10px; transition: 0.3s; }
+        .btn-maps { background: var(--gold); font-size: 0.9rem; }
+        .btn-confirm:hover { background: var(--gold); }
+
+        /* GUEST BOOK DISPLAY */
+        #guestBookDisplay { text-align: left; max-height: 400px; overflow-y: auto; padding: 15px; margin-top: 20px; background: #fcfcfc; border-radius: 10px; border: 1px inset #eee; }
+        .guest-item { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+
+        footer { background: var(--wood); color: var(--cream); padding: 60px 20px; text-align: center; }
+        #music-control { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: var(--gold); color: white; width: 50px; height: 50px; border-radius: 50%; display: none; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .info-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+        .info-item { flex: 1; min-width: 250px; padding: 20px; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); text-align: center;}
+        .info-item i { font-size: 1.5rem; color: var(--gold); margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="westlife.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-control" onclick="toggleMusic()"><i class="fas fa-pause"></i></div>
+
+    <div id="gate">
+        <img src="https://cdn-icons-png.flaticon.com/512/2913/2913444.png" class="gunungan" style="filter: brightness(0) invert(1);">
+        <p style="letter-spacing: 5px; text-transform: uppercase;">The Wedding Celebration of</p>
+        <h1>Aidan & Mutia</h1>
+        <p style="font-size: 1.2rem; border-top: 1px solid white; border-bottom: 1px solid white; padding: 10px 20px;">11 . 02 . 2031</p>
+        <button class="btn-open" onclick="bukaUndangan()"><i class="fas fa-envelope-open"></i> Buka Undangan</button>
+    </div>
+
+    <div id="content">
+        <section id="opening" style="text-align: center;">
+            <img src="https://cdn-icons-png.flaticon.com/512/2913/2913444.png" class="gunungan">
+            <p>Assalamu’alaikum Warahmatullahi Wabarakatuh</p>
+            <div class="ornament-divider"><i class="fas fa-leaf"></i></div>
+            <div class="quote-box" style="font-style: italic;">
+                "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri..."
+                <br><strong>(QS. Ar-Rum: 21)</strong>
+            </div>
+        </section>
+
+        <section class="themed-section" id="mempelai">
+            <h2 class="sub-title">Mempelai</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 40px;">
+                <div class="couple-card">
+                    <img src="algahazali.jpg" class="couple-photo">
+                    <h3 class="couple-name-script">Aidan Alfarizi</h3>
+                    <p>Putra dari Bapak Nanam & Ibu Bubu</p>
+                </div>
+                <div style="font-family: 'Great Vibes'; font-size: 4rem; color: var(--gold); align-self: center;">&</div>
+                <div class="couple-card">
+                    <img src="allysa.jpg" class="couple-photo">
+                    <h3 class="couple-name-script">Mutiara Nhazifa</h3>
+                    <p>Putri dari Bapak Hadi & Ibu Ina</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="story">
+            <h2 class="sub-title">Our Story</h2>
+            <div class="story-timeline">
+                <div class="story-container-v2 left">
+                    <div class="story-pin"><img src="ourstorypict1.jpg"> </div>
+                    <div class="story-content-v2">
+                        <h3 style="color: var(--gold); margin-bottom: 5px;">Our Starts</h3>
+                        <p style="font-size: 0.85rem;">Berawal dari pertemuan singkat di hari itu, semuanya terasa tiba-tiba membahagiakan.</p>
+                    </div>
+                </div>
+                <div class="story-container-v2 right">
+                    <div class="story-pin"><img src="ourstorypict2.jpg"> </div>
+                    <div class="story-content-v2">
+                        <h3 style="color: var(--gold); margin-bottom: 5px;">The Distance</h3>
+                        <p style="font-size: 0.85rem;">Jarak mengajarkan kita arti dari pentingnya bertindak sebelum ia tak terjangkau olehnya.</p>
+                    </div>
+                </div>
+                <div class="story-container-v2 left">
+                    <div class="story-pin"><img src="ourstorypict3.jpg"> </div>
+                    <div class="story-content-v2">
+                        <h3 style="color: var(--gold); margin-bottom: 5px;">The Reunion</h3>
+                        <p style="font-size: 0.85rem;">Waktu kembali mempertemukan. Senyum yang tak pernah pudar di malam saat mataku kembali melihatnya.</p>
+                    </div>
+                </div>
+                <div class="story-container-v2 right">
+                    <div class="story-pin"><img src="ourstorypict4.jpg"> </div>
+                    <div class="story-content-v2">
+                        <h3 style="color: var(--gold); margin-bottom: 5px;">Growing Together</h3>
+                        <p style="font-size: 0.85rem;">Belajar tumbuh dan saling berbagi mimpi. Menemukan ketenangan di setiap langkah yang kita lalui dengan kepercayaan.</p>
+                    </div>
+                </div>
+                <div class="story-container-v2 left">
+                    <div class="story-pin"><img src="ourstorypict6.jpg"> </div>
+                    <div class="story-content-v2">
+                        <h3 style="color: var(--gold); margin-bottom: 5px;">The Final Way</h3>
+                        <p style="font-size: 0.85rem;">Hingga akhirnya kita sadar, kita telah menemukan jalan pulang untuk menetap selamanya.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="acara">
+            <h2 class="sub-title">Rangkaian Acara</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px;">
+                <div style="background: white; padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 300px; text-align: center;">
+                    <h3>Akad Nikah</h3>
+                    <p>10:00 WIB - Selesai</p>
+                    <p><strong>Banyuwangi</strong></p>
+                    <p style="font-size: 0.8rem; margin-bottom: 10px;">Jl. Gatot Subroto No.Km. 6, Klatak, Kec. Kalipuro, Banyuwangi</p>
+                    <a href="https://maps.google.com/?q=Banyuwangi" target="_blank" class="btn-maps">
+                        <i class="fas fa-map-marker-alt"></i> Google Maps
+                    </a>
+                </div>
+                <div style="background: white; padding: 30px; border-radius: 20px; border: 1px solid var(--gold); width: 300px; text-align: center;">
+                    <h3>Resepsi</h3>
+                    <p>20:00 WIB - Selesai</p>
+                    <p><strong>Lombok (Grand Ballroom)</strong></p>
+                    <p style="font-size: 0.8rem; margin-bottom: 10px;">Jl. Raya Senggigi, Batu Layar, Lombok Barat, NTB</p>
+                    <a href="https://maps.google.com/?q=Lombok+Senggigi" target="_blank" class="btn-maps">
+                        <i class="fas fa-map-marker-alt"></i> Google Maps
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <i class="fas fa-tshirt"></i>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Dresscode</h3>
+                    <p style="font-size: 0.85rem; font-style: italic;">Pakaian Formal / Earth Tone</p>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-info-circle"></i>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 5px;">Informasi</h3>
+                    <p style="font-size: 0.85rem;">Kehadiran tepat waktu sangat kami harapkan demi kekhidmatan acara.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="themed-section" id="save-the-date">
+            <div class="save-the-date">SAVE THE DATE</div>
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Selasa, 11 Februari 2031</h2>
+            <p>Jangan lewatkan hari bahagia kami</p>
+            <div class="countdown-container" id="timer"></div>
+        </section>
+
+        <section id="gallery">
+            <h2 class="sub-title">Galeri Bahagia</h2>
+            <div class="gallery-grid">
+                <img src="preweeding1.jpg" class="gallery-img">
+                <img src="preweeding2.jpg" class="gallery-img">
+                <img src="preweeding3.jpg" class="gallery-img">
+                <img src="preweeding5.jpg" class="gallery-img">
+                <img src="preweeding6.jpg" class="gallery-img">
+                <img src="preweeding10.jpg" class="gallery-img">
+                <img src="preweeding11.jpg" class="gallery-img">
+                <img src="preweeding9.jpg" class="gallery-img">
+            </div>
+        </section>
+
+        <section id="amplop">
+            <h2 class="sub-title">Digital Envelope</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Doa restu Anda adalah kado terindah bagi kami. Namun jika ingin memberikan tanda kasih, Anda dapat mengirimkannya melalui:</p>
+            <div class="bank-card">
+                <i class="fas fa-university" style="font-size: 2rem; color: var(--gold);"></i>
+                <h3 style="margin: 10px 0;">BANK BCA</h3>
+                <p style="font-size: 1.2rem; font-weight: bold; letter-spacing: 2px;">1234567890</p>
+                <p>a.n Aidan Alfarizi</p>
+                <button class="btn-confirm" onclick="copyRekening('1234567890')" style="margin-top: 15px; background: var(--gold);">
+                   <i class="fas fa-copy"></i> Salin No. Rekening
+                </button>
+            </div>
+        </section>
+
+        <section class="themed-section" id="rsvp-section">
+            <h2 class="sub-title">Konfirmasi & Ucapan</h2>
+            <div class="rsvp-box">
+                <input type="text" id="namaTamu" placeholder="Nama Lengkap" required>
+                <select id="statusHadir" required>
+                    <option value="">Status Kehadiran</option>
+                    <option value="Hadir">Hadir</option>
+                    <option value="Tidak Hadir">Tidak Hadir</option>
+                </select>
+                <textarea id="ucapanTamu" rows="4" placeholder="Tulis doa restu Anda di sini..."></textarea>
+                <button class="btn-confirm" onclick="prosesKonfirmasi()">Kirim via WhatsApp</button>
+                
+                <hr style="margin: 30px 0; border: 0; border-top: 1px solid var(--gold); opacity: 0.3;">
+                <h3 style="font-family: 'Montserrat'; font-size: 1.2rem; margin-bottom: 10px;">Doa & Harapan</h3>
+                <div id="guestBookDisplay">
+                    <p style="text-align: center; color: #888; font-style: italic;">Belum ada ucapan. Jadilah yang pertama!</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <h3>KAMI YANG BERBAHAGIA</h3>
+            <div style="margin: 20px 0; opacity: 0.8;">
+                <p>Kel. Bapak Nanam & Ibu Bubu</p>
+                <p>Kel. Bapak Adi & Ibu Ina</p>
+            </div>
+            <h2 style="font-family: 'Great Vibes'; font-size: 3rem; color: var(--gold);">Aidan & Mutia</h2>
+        </footer>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicCtrl = document.getElementById('music-control');
+
+        function bukaUndangan() {
+            music.play().catch(e => console.log("Audio play blocked"));
+            musicCtrl.style.display = 'flex';
+            document.getElementById('gate').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('gate').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                checkScroll();
+            }, 1000);
+        }
+
+        function toggleMusic() {
+            if (music.paused) { music.play(); musicCtrl.innerHTML = '<i class="fas fa-pause"></i>'; }
+            else { music.pause(); musicCtrl.innerHTML = '<i class="fas fa-play"></i>'; }
+        }
+
+        function prosesKonfirmasi() {
+            const nama = document.getElementById('namaTamu').value;
+            const status = document.getElementById('statusHadir').value;
+            const ucapan = document.getElementById('ucapanTamu').value;
+
+            if (nama === "" || status === "") {
+                alert("Mohon isi Nama dan Status Kehadiran.");
+                return;
+            }
+
+            // UPDATE BUKU TAMU SECARA LOKAL
+            const displayArea = document.getElementById('guestBookDisplay');
+            if (displayArea.innerHTML.includes("Belum ada ucapan")) {
+                displayArea.innerHTML = "";
+            }
+
+            const newGuestEntry = `
+                <div class="guest-item">
+                    <strong style="color: var(--wood);">${nama}</strong> 
+                    <span style="font-size: 0.7rem; background: var(--gold); color: white; padding: 2px 8px; border-radius: 10px; margin-left: 5px;">${status}</span>
+                    <p style="font-size: 0.9rem; margin-top: 5px; color: #555;">${ucapan}</p>
+                </div>
+            `;
+            displayArea.insertAdjacentHTML('afterbegin', newGuestEntry);
+
+            // WHATSAPP PROCESS
+            const phoneNumber = "6289503517413"; 
+            const fullMessage = `Halo Aidan & Mutia, saya *${nama}* ingin mengonfirmasi bahwa saya *${status}* di acara pernikahan kalian.\n\n"${ucapan}"`;
+            const encodedText = encodeURIComponent(fullMessage);
+            window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedText}`, '_blank');
+        }
+
+        function copyRekening(nomor) {
+            navigator.clipboard.writeText(nomor);
+            alert("Nomor rekening berhasil disalin: " + nomor);
+        }
+
+        function checkScroll() {
+            document.querySelectorAll('section').forEach(sec => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= window.innerHeight - 150) {
+                    sec.classList.add('show');
+                }
+            });
+        }
+
+        function updateCountdown() {
+            const targetDate = new Date("February 11, 2031 10:00:00").getTime();
+            const now = new Date().getTime();
+            const gap = targetDate - now;
+
+            const day = Math.floor(gap / (1000 * 60 * 60 * 24));
+            const hour = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const min = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+            const sec = Math.floor((gap % (1000 * 60)) / 1000);
+
+            const timerEl = document.getElementById('timer');
+            if(timerEl) {
+                timerEl.innerHTML = `
+                    <div class="countdown-item"><span>${day}</span> Hari</div>
+                    <div class="countdown-item"><span>${hour}</span> Jam</div>
+                    <div class="countdown-item"><span>${min}</span> Menit</div>
+                    <div class="countdown-item"><span>${sec}</span> Detik</div>
+                `;
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>
